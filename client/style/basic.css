@@ -3,10 +3,14 @@ body {
 	margin: 0px;
 	padding: 0px;
 	
-	font-family: Helvetica, Arial, Sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, Sans-serif;
 	color: #000;
 	font-size: 14px;
 	line-height: 21px;
+}
+
+.magentaSelected {
+	border: 5px solid #00FF7F !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -36,6 +40,11 @@ h5 {
 
 h6 {
 	font-size: 25px;
+}
+
+input {
+	display: block;
+	outline: none;
 }
 
 button {

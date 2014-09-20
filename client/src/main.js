@@ -3,44 +3,60 @@ $(document).ready(function() {
 	// Initialize template
 	var temp = new Template(), body = $('body');
 
-	var h2 = temp.addElement('h2');
-	h2.get().html('Air');
-	body.append(h2.get());
-
-	// Example for TESTING
-
-	var newel = temp.getElementByID(temp.add({
+	var firstInput = {
 		"action": "ADD",
-		"type": "button",
-		"html": "Click Me",
+		"type": "div",
+		"html": "",
 		"styles": [
 			{
 				"property": "background",
-				"value": "#111111"
+				"value": "white"
 			},{
-				"property": "color",
-				"value": "#FFF"
+				"property": "width",
+				"value": "80%"
+			},{
+				"property": "height",
+				"value": "auto"
 			},{
 				"property": "padding",
-				"value": "10px 20px"
+				"value": "3% 5%"
+			},{
+				"property": "margin",
+				"value": "5%"
 			},{
 				"property": "border",
-				"value": "1px solid #444444"
+				"value": "1px solid red"
+			}
+		]
+	}
+
+	var secondInput = {
+		"action": "ADD",
+		"type": "h4",
+		"html": "Hello World",
+		"styles": [
+			{
+				"property": "color",
+				"value": "red"
+			},{
+				"property": "text-align",
+				"value": "center"
+			},{
+				"property": "font-style",
+				"value": "italic"
 			}
 		],
-		"parent": 0
-	})).get();
+		"parent": 1
+	}
 
-	newel.click(function() {
-		alert('I GET IT, I GET IT.');
-	});
+	// Test adding
+	console.log(determineAction(firstInput));
+	console.log(determineAction(secondInput));
 
+	function determineAction(data) {
+		if(data && data.action.toLowerCase() == "add") {
+			return temp.get({"elementID": temp.add(data)});
+		}
+	}
 
-	console.log(temp.get({
-		"intent": "GET",
-		"elementID": 3
-	}));
-
-	console.log(temp.get());
-
-});	
+});

@@ -1,0 +1,51 @@
+body {
+	background: #FFFDFE;
+}
+
+#header {
+	background: rgba(255,255,255,0.9);
+	border-bottom: 1px solid rgba(255,0,158,0.1);
+	padding: 25px 30px;
+	overflow: hidden;
+	font-weight: 800;
+	color: #FF009E;
+	text-transform: uppercase;
+	font-size: 13px;
+	letter-spacing: 3px;
+}
+
+#main-container {
+	display: inline-block;
+}
+
+/*#main-container {
+	background: #FFF0F7;
+	width: 80%;
+	height: auto;
+	display: inline-block;
+	padding: 3% 5%;
+	margin: 5%;
+}
+
+h4 {
+	color: red;
+	text-align: center;
+	font-style: italic;
+}
+
+p {
+	color: #4F0025;
+}
+
+input {
+	border: 1px solid red;
+	padding: 5px 10px;
+	outline: none;
+	color: red;
+	font-size: 20px;
+	margin: 20px;
+}
+
+button {
+	padding: 10px 20px;
+}*/

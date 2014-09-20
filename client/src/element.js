@@ -1,6 +1,8 @@
 function Element(type) {
 	this.el = $('<'+type+'></'+type+'>');
 	this.staticID = this.getGlobalStaticID();
+	this.el.attr('staticID', this.staticID);
+	this.isSelected = false;
 
 	// That for this
 	var that = this;
@@ -12,6 +14,16 @@ function Element(type) {
 
 	this.getStaticID = function() {
 		return that.staticID;
+	}
+
+	this.select = function() {
+		this.isSelected = true;
+		this.el.addClass('magentaSelected');
+	}
+
+	this.unselect = function() {
+		this.isSelected = false;
+		this.el.removeClass('magentaSelected');
 	}
 
 	this.applyStyles = function(styles) {

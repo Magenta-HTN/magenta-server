@@ -40,6 +40,6 @@
 // GET from Canvas (client) to Artist (server)
 
 {
-	"intent": "GET",
+	"intent": "SELECT",
 	"elementID": 4
 }
