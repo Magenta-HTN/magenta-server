@@ -38,6 +38,23 @@ h6 {
 	font-size: 25px;
 }
 
+button {
+	background: #FFF;
+	outline: none;
+	border: 1px solid #999;
+	padding: 15px 30px;
+	cursor: pointer;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-transition: background 500ms;
+	transition: background 500ms;
+}
+
+button:hover {
+	background: #FAFAFA;
+}
+
 a {
 	color: #5A71E9;
 	text-decoration: none;

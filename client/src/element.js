@@ -2,7 +2,6 @@ function Element(type) {
 	this.el = $('<'+type+'></'+type+'>');
 	this.staticID = this.getGlobalStaticID();
 
-
 	// That for this
 	var that = this;
 
@@ -14,10 +13,24 @@ function Element(type) {
 	this.getStaticID = function() {
 		return that.staticID;
 	}
+
+	this.applyStyles = function(styles) {
+		if(styles) {
+			for(var i = 0; i < styles.length; i++) {
+				this.el.css(styles[i].property, (styles[i].value) ? styles[i].value:"");
+			}
+		}
+	}
+
+	this.applyHTML = function(data) {
+		if(data) {
+			this.el.html(data);
+		}
+	}
 }
 
-// This is a global static id reference
-Element.globalStaticID = 0;
+// Global static ID reference
+Element.globalStaticID = 1;
 Element.prototype.getGlobalStaticID = function() {
 	return (Element.globalStaticID++);
 }
