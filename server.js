@@ -8,7 +8,7 @@ http.createServer(function(req, res) {
 	var filePath = false;
 
 	if (req.url === '/') {
-		filePath = 'public/index.html';
+		filePath = 'client/index.html';
 	}
 
 	serveStatic(res, cache, './' + filePath);
