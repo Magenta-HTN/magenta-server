@@ -1,7 +1,7 @@
 // POST to Canvas (client) from Artist (server)
 
 {
-	"action": "ADD",
+	"intent": "ADD",
 	"type": "button",
 	"html": "Click Me",
 	"styles": [
@@ -18,12 +18,12 @@
 }
 
 {
-	"action": "REMOVE",
+	"intent": "REMOVE",
 	"elementID": 5
 }
 
 {
-	"action": "MODIFY",
+	"intent": "MODIFY",
 	"elementID": 5,
 	"style": [
 		{
@@ -40,6 +40,6 @@
 // GET from Canvas (client) to Artist (server)
 
 {
-	"action": "GET",
+	"intent": "GET",
 	"elementID": 4
 }
