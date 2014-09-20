@@ -1,5 +1,6 @@
 var http = require('http'),
 	fs = require('fs'),
+	querystring = require('querystring');
 	cache = {};
 
 var server = http.createServer(function(req, res) {
@@ -7,10 +8,30 @@ var server = http.createServer(function(req, res) {
 
 	if (req.url === '/') {
 		filePath = 'public/index.html';
-	} else {
-		if (req.url !== '/socket.io/socket.io.js') {
-			filePath = 'public' + req.url;
-		}
+	} 
+
+	//get all dependencies
+	if (req.url.split('/')[1] === 'src' || req.url.split('/')[1] === 'style') {
+		filePath = 'public' + req.url;
+	}
+
+	if (req.method == "POST") {
+		console.log("there has been a post from:");
+		console.log(req.url);
+		var requestBody = "";
+
+		req.on('data', function(d) {
+			requestBody += d.toString('utf8');
+			if (requestBody.length > 1e7) {
+				res.writeHead(200, {"content-type" : "text/plain"});
+				res.end('your post data was very long');
+			}
+		});
+
+		req.on('end', function() {
+			console.log("this is a post");
+			console.log(requestBody);
+		})
 	}
 
 	serveStatic(res, cache, './' + filePath);
@@ -61,5 +82,30 @@ io.on('connection', function(socket) {
 function addElement() {
 
 }
+
+var opts = {
+  host: 'localhost',
+  port: 8080,
+  path: '/sex',
+  method: 'POST',
+  headers: {'content-type':'application/json'}
+}
+
+var req = http.request(opts, function(res) {
+	var data = "";
+	res.setEncoding('utf8');
+	res.on('data', function(d) {
+		data += d;
+	})
+	console.log(data)
+})
+
+req.on('error', function(err) {
+	console.log("you fucked this up. How could you?");
+})
+
+req.write('{"test": "navjot"}');
+req.end();
+
 
 
