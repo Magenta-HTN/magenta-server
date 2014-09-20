@@ -7,7 +7,7 @@ $(document).ready(function() {
 	h2.get().html('Air');
 	body.append(h2.get());
 
-	// Example
+	// Example for TESTING
 
 	var newel = temp.getElementByID(temp.add({
 		"action": "ADD",
@@ -35,5 +35,12 @@ $(document).ready(function() {
 		alert('I GET IT, I GET IT.');
 	});
 
+
+	console.log(temp.get({
+		"intent": "GET",
+		"elementID": 3
+	}));
+
+	console.log(temp.get());
 
 });	
