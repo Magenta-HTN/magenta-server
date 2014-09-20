@@ -7,11 +7,11 @@ http = http.createServer(function(req, res) {
 	var filePath = false;
 
 	if (req.url === '/') {
-		filePath = 'public/index.html';
+		filePath = 'client/index.html';
 	}
 
 	if (req.url === '/add') {
-		
+
 	}
 
 	if (req.url === '/remove') {
