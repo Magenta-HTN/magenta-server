@@ -1,5 +1,6 @@
 function Template() {
 	this.elements = {};
+	this.numbers = [];
 
 	// That for this
 	var that = this;
@@ -21,6 +22,37 @@ function Template() {
 		return _.toArray(that.elements);
 	}
 
+	this.unselectAll = function() {
+		_.forEach(this.getElementList(), function(el) {
+			el.unselect();
+		});
+	}
+
+	this.removeDisplayNumbers = function() {
+		_.forEach(this.numbers, function(n) {
+			n.remove();
+		});
+	}
+
+	this.updateDisplayNumbers = function() {
+		var that = this;
+		this.removeDisplayNumbers(); // Remove previous numbers, inefficient... but still
+		_.forEach(this.getElementList(), function(el) {
+			if(jQuery.contains(document, el.get()[0])) {
+				var node = $('<div></div>')
+				.attr('class','number')
+				.html(el.get()[0].attributes[0].value)
+				.css('position', 'absolute')
+				.css('top', el.get().offset().top + el.get().height())
+				.css('left', el.get().offset().left + el.get().width());
+				
+				console.log(el.get());
+				that.numbers.push(node);
+				$('body').append(node);
+			}
+		});
+	}
+
 	// Actions made by the artist
 
 	this.add = function(data) {
@@ -36,6 +68,8 @@ function Template() {
 			$('body').append(el.get());
 		}
 
+		this.updateDisplayNumbers();
+
 		return el.getStaticID();
 	}
 
@@ -45,6 +79,7 @@ function Template() {
 		var el = this.getElementByID(data.elementID);
 		if(el) {
 			el.get().remove();
+			this.updateDisplayNumbers();
 			return true;
 		} else {
 			return false;
@@ -63,15 +98,9 @@ function Template() {
 		}
 	}
 
-	this.unselectAll = function() {
-		_.forEach(that.getElementList(), function(el) {
-			el.unselect();
-		});
-	}
-
 	this.get = function(data) {
 		this.unselectAll(); // Unselect everything before selecting again
-		
+
 		var returnArray = [];
 		if(data && data.elementID) {
 			var el = this.getElementByID(data.elementID);

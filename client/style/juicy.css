@@ -18,6 +18,23 @@ body {
 	display: inline-block;
 }
 
+.number {
+	background: rgba(0,0,0,0.8);
+	width: 15px;
+	height: 15px;
+	padding: 2px;
+	font-size: 8px;
+	font-weight: 800;
+	line-height: 15px;
+	text-align: center;
+	color: #FFF;
+	-webkit-border-radius: 100px;
+	-moz-border-radius: 100px;
+	border-radius: 100px;
+	border: 2px solid #FFF;
+	box-shadow: 0px 1px 5px rgba(0,0,0,0.5);
+}
+
 /*#main-container {
 	background: #FFF0F7;
 	width: 80%;
