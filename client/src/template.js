@@ -60,6 +60,17 @@ function Template() {
 	}
 
 	this.get = function(data) {
-		return this.getElementByID(data.elementID);
+		var returnArray = [];
+		if(data) {
+			var el = this.getElementByID(data.elementID);
+			if(el) {
+				returnArray.push(el.get()[0]);
+			}
+		} else {
+			returnArray = _.map(this.getElementList(), function(el) {
+				return (el) ? el.get()[0]:null;
+			});
+		}
+		return returnArray;
 	}
 }
