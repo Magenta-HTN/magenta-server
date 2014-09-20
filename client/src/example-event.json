@@ -1,0 +1,45 @@
+// POST to Canvas (client) from Artist (server)
+
+{
+	"action": "ADD",
+	"type": "button",
+	"html": "Click Me",
+	"styles": [
+		{
+			"property": "border-radius",
+			"value": "6px"
+		},
+		{
+			"property": "background-color",
+			"value": "#11FD48"
+		}
+	],
+	"parent": 3 // Parent is simply the element id of parent
+}
+
+{
+	"action": "REMOVE",
+	"elementID": 5
+}
+
+{
+	"action": "MODIFY",
+	"elementID": 5,
+	"style": [
+		{
+			"property": "border-radius",
+			"value": null // null = property deleted
+		},
+		{
+			"property": "background-color",
+			"value": "#121212"
+		}
+	]
+}
+
+// GET from Canvas (client) to Artist (server)
+
+{
+	"action": "GET",
+	"elementID": 4
+}
