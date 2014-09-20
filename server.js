@@ -1,14 +1,29 @@
-
 var http = require('http'),
 	url = require('url'),
 	fs = require('fs'),
 	cache = {};
 
-http.createServer(function(req, res) {
+http = http.createServer(function(req, res) {
 	var filePath = false;
 
 	if (req.url === '/') {
-		filePath = 'client/index.html';
+		filePath = 'public/index.html';
+	}
+
+	if (req.url === '/add') {
+		
+	}
+
+	if (req.url === '/remove') {
+
+	}
+
+	if (req.url === '/modify') {
+
+	}
+
+	if (req.url === '/select') {
+
 	}
 
 	serveStatic(res, cache, './' + filePath);
@@ -46,3 +61,18 @@ function serveStatic(response, cache, absPath) {
 		})
 	}
 }
+
+// *********************** THIS IS SOCKET **************************
+
+var io = require('socket.io')(http);
+
+io.on('connection', function(socket) {
+
+})
+
+
+function addElement() {
+
+}
+
+
