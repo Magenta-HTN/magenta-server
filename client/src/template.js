@@ -92,6 +92,7 @@ function Template() {
 		var el = this.getElementByID(data.elementID);
 		if(el) {
 			el.applyStyles((data.styles) ? data.styles:[]);
+			this.updateDisplayNumbers();
 			return true;
 		} else {
 			return false;

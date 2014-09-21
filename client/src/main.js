@@ -7,69 +7,67 @@ $(document).ready(function() {
 		temp.updateDisplayNumbers();
 	});
 
-	var firstInput = {
-		"intent": "ADD",
-		"type": "div",
-		"html": "",
-		"styles": [
-			{
-				"property": "background",
-				"value": "white"
-			},{
-				"property": "width",
-				"value": "80%"
-			},{
-				"property": "height",
-				"value": "auto"
-			},{
-				"property": "padding",
-				"value": "3% 5%"
-			},{
-				"property": "margin",
-				"value": "5%"
-			},{
-				"property": "border",
-				"value": "1px solid red"
-			}
-		]
-	}
+	var initialInputs = [
+		{
+			"intent": "ADD",
+			"type": "div",
+			"html": "",
+			"styles": [
+				{
+					"property": "background",
+					"value": "white"
+				},{
+					"property": "width",
+					"value": "80%"
+				},{
+					"property": "height",
+					"value": "auto"
+				},{
+					"property": "padding",
+					"value": "3% 5%"
+				},{
+					"property": "margin",
+					"value": "5%"
+				},{
+					"property": "border",
+					"value": "1px solid red"
+				}
+			]
+		},{
+			"intent": "ADD",
+			"type": "h4",
+			"html": "Hello World",
+			"styles": [
+				{
+					"property": "color",
+					"value": "red"
+				},{
+					"property": "text-align",
+					"value": "center"
+				},{
+					"property": "font-style",
+					"value": "italic"
+				}
+			],
+			"parent": 1
+		},{
+			"intent": "ADD",
+			"type": "p",
+			"html": "lorem ipsum",
+			"styles": [
+				{
+					"property": "color",
+					"value": "#4F0025"
+				}
+			],
+			"parent": 1
+		}
+	];
 
-	var secondInput = {
-		"intent": "ADD",
-		"type": "h4",
-		"html": "Hello World",
-		"styles": [
-			{
-				"property": "color",
-				"value": "red"
-			},{
-				"property": "text-align",
-				"value": "center"
-			},{
-				"property": "font-style",
-				"value": "italic"
-			}
-		],
-		"parent": 1
-	}
-
-	var thirdInput = {
-		"intent": "ADD",
-		"type": "p",
-		"html": "lorem ipsum",
-		"styles": [
-			{
-				"property": "color",
-				"value": "#4F0025"
-			}
-		],
-		"parent": 1
-	}
-
-	// Test adding
-	determineAction(firstInput);
-	determineAction(secondInput);
-	determineAction(thirdInput);
+	// Add tests
+	_.forEach(initialInputs, function(in) {
+		determineAction(in);
+	});
 
 	function determineAction(data) {
 		data = (typeof(data) == "string") ? JSON.parse(data):data;
