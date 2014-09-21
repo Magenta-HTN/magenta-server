@@ -52,7 +52,8 @@ var server = http.createServer(function(req, res) {
 		})
 	}
 
-}).listen(8080, function() {console.log("server is now listening")});
+}).listen(1337, "127.0.0.1");
+console.log("Server Running on Port: 1337");
 
 function loadScript(response, absPath) {
 	response.writeHead(200, {"content-type": "application/javascript"});
@@ -76,7 +77,7 @@ setInterval(runTest, 2000);
 function runTest() {
 	var opts = {
 	  host: 'localhost',
-	  port: 8080,
+	  port: 1337,
 	  path: '/elements',
 	  method: 'POST',
 	  headers: {'content-type':'application/json'}
