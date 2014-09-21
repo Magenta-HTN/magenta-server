@@ -45,7 +45,7 @@ function Template() {
 				.html(el.get()[0].attributes[0].value)
 				.css('position', 'absolute')
 				.css('top', parseInt(el.get().offset().top) - 10)
-				.css('right', parseInt(el.get().offset().left) - 10);
+				.css('right', parseInt(el.get().offset().left) - 10)
 
 				that.numbers.push(node);
 				$('body').append(node);

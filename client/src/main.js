@@ -3,6 +3,10 @@ $(document).ready(function() {
 	// Initialize template
 	var temp = new Template(), body = $('body');
 
+	$(window).resize(function() {
+		temp.updateDisplayNumbers();
+	});
+
 	var firstInput = {
 		"action": "ADD",
 		"type": "div",
@@ -60,9 +64,8 @@ $(document).ready(function() {
 	}
 
 	var poll = function() {
-		$.getJSON('./poll', function(response) {
-			
-
+		$.getJSON('./poll', function(res) {
+			console.log(res);
 			poll();
 		})
 	}
