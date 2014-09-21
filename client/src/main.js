@@ -66,23 +66,10 @@ $(document).ready(function() {
 		"parent": 1
 	}
 
-	var fourthInput = {
-		"intent": "MODIFY",
-		"elementID": 2,
-		"styles": [
-			{
-				"property": "color",
-				"value": "blue"
-			}
-		]
-	}
-
 	// Test adding
 	console.log(determineAction(firstInput));
 	console.log(determineAction(secondInput));
 	console.log(determineAction(thirdInput));
-	console.log(determineAction(fourthInput));
-
 
 	function determineAction(data) {
 
