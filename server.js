@@ -33,8 +33,7 @@ var server = http.createServer(function(req, res) {
 	if (req.method === 'GET' && req.url === '/poll') {
 		var originalSize = elementStack.length;
 		res.writeHead(200, {'content-type': 'application/json'});
-		res.end(JSON.stringify(elementStack));
-		elementStack.splice(0, originalSize);
+		res.end(JSON.stringify(elementStack.splice(0, originalSize)));
 	}
 
 	if (req.method == "POST") {
