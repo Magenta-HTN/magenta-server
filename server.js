@@ -2,7 +2,6 @@ var http = require('http'),
 	fs = require('fs'),
 	cache = {},
 	elementStack = [],
-	elementStackOffload = [],
 	port = process.env.PORT || 3000;
 
 Array.prototype.remove = function(from, to) {
@@ -20,8 +19,7 @@ var server = http.createServer(function(req, res) {
 		res.end(getFileData(filePath));
 	} 
 
-	var sourcesFolder = req.url.split('/')[1]
-	// console.log(sourcesFolder);
+	var sourcesFolder = req.url.split('/')[1];
 	filePath = './client' + req.url;
 
 	if (sourcesFolder === 'src') {
@@ -33,15 +31,10 @@ var server = http.createServer(function(req, res) {
 	}
 
 	if (req.method === 'GET' && req.url === '/poll') {
-		while(elementStack) {
-			elementStackOffload.push(elementStack[0]);
-			elementStack.remove(0);
-		}
-
+		var originalSize = elementStack.length;
 		res.writeHead(200, {'content-type': 'application/json'});
-		res.end(JSON.stringify(elementStackOffload));
-		elementStack = [];
-		elementStackOffload = [];
+		res.end(JSON.stringify(elementStack));
+		elementStack.splice(0, originalSize);
 	}
 
 	if (req.method == "POST") {
