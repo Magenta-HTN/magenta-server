@@ -56,7 +56,7 @@ $(document).ready(function() {
 	var thirdInput = {
 		"intent": "ADD",
 		"type": "p",
-		"html": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum egestas odio at fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit sapien massa, ac rutrum dui congue in. Etiam in porttitor augue, pellentesque aliquet ex. Quisque varius commodo sem. Cras facilisis luctus maximus. In hac habitasse platea dictumst. Ut in rutrum neque. Mauris elit neque, tincidunt sit amet arcu scelerisque, imperdiet mattis tellus.",
+		"html": "lorem ipsum",
 		"styles": [
 			{
 				"property": "color",
