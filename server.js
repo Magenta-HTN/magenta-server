@@ -1,13 +1,6 @@
 var http = require('http'),
 	fs = require('fs'),
-	Q = require('q'),
-	querystring = require('querystring');
-	cache = {},
-	numClients = 0,
-	numRequest = 0;
-
-var socketResponses = [];
-var bookmarks = {}, socketBookmarkNumber = 1;
+	cache = {};
 
 var server = http.createServer(function(req, res) {
 	var filePath = false;
@@ -17,32 +10,19 @@ var server = http.createServer(function(req, res) {
 	} 
 
 	//get all dependencies
-	if (req.url.split('/')[1] === 'src' || req.url.split('/')[1] === 'style') {
+	var sourcesFolder = req.url.split('/')[1]
+	if (sourcesFolder === 'src' || sourcesFolder === 'style') {
 		filePath = 'public' + req.url;
 	}
 
 	serveStatic(res, cache, './' + filePath);
 
-	if (req.method == "GET") {
-		if (req.url === "/elements") {
-			//sendSocketEvent({intent: "select", elementID: "null"}); //Mobile sends this
-			io.emit("action", {
-				intent: "select", 
-				elementID: "null",
-				socketID: socketBookmarkNumber++
-			}); //Mobile sends this
-
-			bookmarks[socketBookmarkNumber - 1] = res;
-		}
-	}
-
 	if (req.method == "POST") {
-		console.log("there has been a post from:");
-		console.log(req.url);
 		var requestBody = "";
 
 		req.on('data', function(d) {
 			requestBody += d.toString('utf8');
+			//this makes sure the response is not an infinitely large file
 			if (requestBody.length > 1e7) {
 				res.writeHead(200, {"content-type" : "text/plain"});
 				res.end('your post data was very long');
@@ -50,14 +30,7 @@ var server = http.createServer(function(req, res) {
 		});
 
 		req.on('end', function() {
-			if (numClients > 0) {
-				console.log("about to emit stuff");
-				sendSocketEvent(requestBody);
-				//send response back, but need to wait for socket response.
-				//socket 
-			} else {
-
-			}
+			
 		})
 	}
 
@@ -93,38 +66,6 @@ function serveStatic(response, cache, absPath) {
 			}
 		})
 	}
-}
-
-// *********************** THIS IS SOCKET **************************
-
-var io = require('socket.io')(server);
-
-io.on('connection', function(socket) {
-	numClients++;
-	runTest();
-	console.log("connected");
-
-	socket.on('actionResponse', function(data) {
-		/*
-			Data looks like
-			{
-				"socketID": 3,
-				"data": [Object]
-			}
-		*/
-		if(data.socketID && bookmarks[data.socketID]) {
-			bookmarks[data.socketID].end(data.data);
-		}
-	})
-})
-
-io.on('disconnect', function() {
-	numClients--;
-})
-
-function sendSocketEvent(data) {
-	console.log('sexy socket');
-	io.emit("action", data);
 }
 
 
