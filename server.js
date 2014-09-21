@@ -25,12 +25,10 @@ var server = http.createServer(function(req, res) {
 		loadStyles(res, filePath);
 	}
 
-	if (req.method === 'GET') {
-		if (req.url === '/poll') {
-			res.writeHead(200, {'content-type': 'application/json'});
-			res.end(JSON.stringify(elementStack));
-			elementStack = [];
-		}
+	if (req.method === 'GET' && req.url === '/poll') {
+		res.writeHead(200, {'content-type': 'application/json'});
+		res.end(JSON.stringify(elementStack));
+		elementStack = [];
 	}
 
 	if (req.method == "POST") {
