@@ -6,7 +6,7 @@ var http = require('http'),
 
 var server = http.createServer(function(req, res) {
 	var filePath = false;
-	console.log(req.url);
+	// console.log(req.url);
 
 
 	if (req.url === '/') {
@@ -16,7 +16,7 @@ var server = http.createServer(function(req, res) {
 	} 
 
 	var sourcesFolder = req.url.split('/')[1]
-	console.log(sourcesFolder);
+	// console.log(sourcesFolder);
 	filePath = './client' + req.url;
 
 	if (sourcesFolder === 'src') {
@@ -30,7 +30,7 @@ var server = http.createServer(function(req, res) {
 	if (req.method === 'GET') {
 		if (req.url === '/poll') {
 			res.writeHead(200, {'content-type': 'application/json'});
-			console.log(elementStack);
+			// console.log(elementStack);
 			res.end(JSON.stringify({msg: "hello"}));
 			elementStack = [];
 		}
