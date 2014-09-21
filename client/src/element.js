@@ -36,6 +36,7 @@ function Element(type) {
 
 	this.applyHTML = function(data) {
 		if(data) {
+			data = (data.toLowerCase() != "lorem ipsum") ? data:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras interdum, odio bibendum eleifend blandit, ex eros convallis augue, scelerisque molestie orci tellus id quam. Proin facilisis neque ex, efficitur aliquet diam molestie ac. Vivamus feugiat lectus auctor, rutrum urna quis, tincidunt dolor. Quisque purus dolor, tempor placerat magna a, dignissim pellentesque ante. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Praesent vitae vestibulum sapien. Praesent nec neque a mauris vehicula euismod non id lacus. Donec sit amet magna fermentum, faucibus neque ac, porttitor risus. Donec tempus vitae ligula nec porttitor. Nam tincidunt maximus purus, sagittis vestibulum lorem accumsan in. Mauris at ex ligula. Nullam lorem justo, elementum sit amet tincidunt et, viverra quis diam. In ut nulla vitae massa elementum iaculis. In sagittis tincidunt metus et aliquet.";
 			this.el.html(data);
 		}
 	}

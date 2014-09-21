@@ -35,6 +35,10 @@ body {
 	box-shadow: 0px 1px 5px rgba(0,0,0,0.5);
 }
 
+.numover {
+	background: rgba(255,0,0,0.9) !important;
+}
+
 /*#main-container {
 	background: #FFF0F7;
 	width: 80%;
