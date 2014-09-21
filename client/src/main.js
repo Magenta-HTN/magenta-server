@@ -79,7 +79,7 @@ $(document).ready(function() {
 
 	var poll = function() {
 		$.getJSON('./poll', function(res) {
-			if(res && res.length > 0) {
+			if(res) {
 				console.log(res);
 			}
 			poll();
