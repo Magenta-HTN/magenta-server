@@ -76,34 +76,34 @@ function getFileData(absPath) {
 	return data.toString('utf8');
 }
 
-// *** TESTING POST ***
+// // *** TESTING POST ***
 
-setInterval(runTest, 2000);
+// setInterval(runTest, 2000);
 
-function runTest() {
-	var opts = {
-	  host: 'localhost',
-	  port: 5000,
-	  path: '/elements',
-	  method: 'POST',
-	  headers: {'content-type':'application/json'}
-	}
+// function runTest() {
+// 	var opts = {
+// 	  host: 'localhost',
+// 	  port: port,
+// 	  path: '/elements',
+// 	  method: 'POST',
+// 	  headers: {'content-type':'application/json'}
+// 	}
 
-	var req = http.request(opts, function(res) {
-		var data = "";
-		res.setEncoding('utf8');
-		res.on('data', function(d) {
-			data += d;
-		})
-		console.log(data)
-	})
+// 	var req = http.request(opts, function(res) {
+// 		var data = "";
+// 		res.setEncoding('utf8');
+// 		res.on('data', function(d) {
+// 			data += d;
+// 		})
+// 		console.log(data)
+// 	})
 
-	req.on('error', function(err) {
-		console.log("you fucked this up. How could you?");
-	})
+// 	req.on('error', function(err) {
+// 		console.log("you fucked this up. How could you?");
+// 	})
 
-	req.write('{"intent": "select", "elementID": "5"}');
-	req.end();
-}
+// 	req.write('{"intent": "select", "elementID": "5"}');
+// 	req.end();
+// }
 
 

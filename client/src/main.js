@@ -84,6 +84,6 @@ $(document).ready(function() {
 		})
 	}
 
-	poll();
+	//poll();
 
 });
