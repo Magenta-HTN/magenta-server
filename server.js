@@ -4,12 +4,6 @@ var http = require('http'),
 	elementStack = [],
 	port = process.env.PORT || 3000;
 
-Array.prototype.remove = function(from, to) {
-  var rest = this.slice((to || from) + 1 || this.length);
-  this.length = from < 0 ? this.length + from : from;
-  return this.push.apply(this, rest);
-};g
-
 var server = http.createServer(function(req, res) {
 	var filePath = false;
 
@@ -19,7 +13,8 @@ var server = http.createServer(function(req, res) {
 		res.end(getFileData(filePath));
 	} 
 
-	var sourcesFolder = req.url.split('/')[1];
+	var sourcesFolder = req.url.split('/')[1]
+	// console.log(sourcesFolder);
 	filePath = './client' + req.url;
 
 	if (sourcesFolder === 'src') {
@@ -30,10 +25,12 @@ var server = http.createServer(function(req, res) {
 		loadStyles(res, filePath);
 	}
 
-	if (req.method === 'GET' && req.url === '/poll') {
-		var originalSize = elementStack.length;
-		res.writeHead(200, {'content-type': 'application/json'});
-		res.end(JSON.stringify(elementStack.splice(0, originalSize)));
+	if (req.method === 'GET') {
+		if (req.url === '/poll') {
+			res.writeHead(200, {'content-type': 'application/json'});
+			res.end(JSON.stringify(elementStack));
+			elementStack = [];
+		}
 	}
 
 	if (req.method == "POST") {
