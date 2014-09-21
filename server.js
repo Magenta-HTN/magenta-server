@@ -1,21 +1,39 @@
 var http = require('http'),
 	fs = require('fs'),
-	cache = {};
+	cache = {},
+	elementStack = [];
 
 var server = http.createServer(function(req, res) {
 	var filePath = false;
+	console.log(req.url);
+
 
 	if (req.url === '/') {
-		filePath = 'public/index.html';
+		filePath = './client/index.html';
+		res.writeHead(200, {'content-type': 'text/html'});
+		res.end(getFileData(filePath));
 	} 
 
-	//get all dependencies
 	var sourcesFolder = req.url.split('/')[1]
-	if (sourcesFolder === 'src' || sourcesFolder === 'style') {
-		filePath = 'public' + req.url;
+	console.log(sourcesFolder);
+	filePath = './client' + req.url;
+
+	if (sourcesFolder === 'src') {
+		loadScript(res, filePath);
 	}
 
-	serveStatic(res, cache, './' + filePath);
+	if (sourcesFolder === 'style') {
+		loadStyles(res, filePath);
+	}
+
+	if (req.method === 'GET') {
+		if (req.url === '/poll') {
+			res.writeHead(200, {'content-type': 'application/json'});
+			console.log(elementStack);
+			res.end(JSON.stringify({msg: "hello"}));
+			elementStack = [];
+		}
+	}
 
 	if (req.method == "POST") {
 		var requestBody = "";
@@ -30,46 +48,30 @@ var server = http.createServer(function(req, res) {
 		});
 
 		req.on('end', function() {
-			
+			elementStack.push(requestBody);
 		})
 	}
 
 }).listen(8080, function() {console.log("server is now listening")});
 
-function sendFile(response, data) {
-	response.writeHead(200, {"content-type": "text/html"});
-	response.end(data);
+function loadScript(response, absPath) {
+	response.writeHead(200, {"content-type": "application/javascript"});
+	response.end(getFileData(absPath));
 }
 
-function send404(response) {
-	response.writeHead(404, {'Content-Type': 'text/plain'});
-	response.write('Error 404: resource not found.');
-	response.end();
+function loadStyles(response, absPath) {
+	response.writeHead(200, {"content-type": "text/css"});
+	response.end(getFileData(absPath));
 }
 
-function serveStatic(response, cache, absPath) {
-	if (cache[absPath]) {
-		sendFile(response, cache[absPath]);
-	} else {
-		fs.exists(absPath, function(exists) {
-			if (exists) {
-				fs.readFile(absPath, function(err, data) {
-					if (err) {
-						send404(response);
-					} else {
-						cache[absPath] =  data;
-						sendFile(response, data);
-					}
-				})
-			} else {
-				send404(response);
-			}
-		})
-	}
+function getFileData(absPath) {
+	var data = fs.readFileSync(absPath);
+	return data.toString('utf8');
 }
-
 
 // *** TESTING POST ***
+
+setInterval(runTest, 2000);
 
 function runTest() {
 	var opts = {

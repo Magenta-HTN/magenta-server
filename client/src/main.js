@@ -60,8 +60,8 @@ $(document).ready(function() {
 	}
 
 	var poll = function() {
-		$.getJSON('./poll' + counter, function(response) {
-			counter
+		$.getJSON('./poll', function(response) {
+			
 
 			poll();
 		})
