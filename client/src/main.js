@@ -73,14 +73,12 @@ $(document).ready(function() {
 
 	function determineAction(data) {
 		data = (typeof(data) == "string") ? JSON.parse(data):data;
-
-		console.log('---------');
-		console.log(data);
-
-		if(data && data.intent.toLowerCase() == "add") {
-			return temp.get({"elementID": temp.add(data)});
-		} else if (data && data.intent.toLowerCase() == "modify") {
-			return temp.modify(data);
+		if(data && data.intent) {
+			if(data.intent.toLowerCase() == "add") {
+				return temp.get({"elementID": temp.add(data)});
+			} else if(data.intent.toLowerCase() == "modify") {
+				return temp.modify(data);
+			}
 		} 
 	}
 
