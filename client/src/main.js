@@ -8,7 +8,7 @@ $(document).ready(function() {
 	});
 
 	var firstInput = {
-		"action": "ADD",
+		"intent": "ADD",
 		"type": "div",
 		"html": "",
 		"styles": [
@@ -35,7 +35,7 @@ $(document).ready(function() {
 	}
 
 	var secondInput = {
-		"action": "ADD",
+		"intent": "ADD",
 		"type": "h4",
 		"html": "Hello World",
 		"styles": [
@@ -54,7 +54,7 @@ $(document).ready(function() {
 	}
 
 	var thirdInput = {
-		"action": "ADD",
+		"intent": "ADD",
 		"type": "p",
 		"html": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum egestas odio at fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer blandit sapien massa, ac rutrum dui congue in. Etiam in porttitor augue, pellentesque aliquet ex. Quisque varius commodo sem. Cras facilisis luctus maximus. In hac habitasse platea dictumst. Ut in rutrum neque. Mauris elit neque, tincidunt sit amet arcu scelerisque, imperdiet mattis tellus.",
 		"styles": [
@@ -66,15 +66,33 @@ $(document).ready(function() {
 		"parent": 1
 	}
 
+	var fourthInput = {
+		"intent": "MODIFY",
+		"elementID": 2,
+		"styles": [
+			{
+				"property": "color",
+				"value": "blue"
+			}
+		]
+	}
+
 	// Test adding
 	console.log(determineAction(firstInput));
 	console.log(determineAction(secondInput));
 	console.log(determineAction(thirdInput));
+	console.log(determineAction(fourthInput));
+
 
 	function determineAction(data) {
-		if(data && data.action.toLowerCase() == "add") {
+
+		data = (typeof(data) == "string") ? JSON.parse(data):data;
+
+		if(data && data.intent.toLowerCase() == "add") {
 			return temp.get({"elementID": temp.add(data)});
-		}
+		} else if (data && data.intent.toLowerCase() == "modify") {
+			return temp.modify(data);
+		} 
 	}
 
 	var poll = function() {

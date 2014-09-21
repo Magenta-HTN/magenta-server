@@ -25,7 +25,7 @@
 {
 	"intent": "MODIFY",
 	"elementID": 5,
-	"style": [
+	"styles": [
 		{
 			"property": "border-radius",
 			"value": null // null = property deleted
