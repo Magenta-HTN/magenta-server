@@ -67,9 +67,9 @@ $(document).ready(function() {
 	}
 
 	// Test adding
-	console.log(determineAction(firstInput));
-	console.log(determineAction(secondInput));
-	console.log(determineAction(thirdInput));
+	determineAction(firstInput);
+	determineAction(secondInput);
+	determineAction(thirdInput);
 
 	function determineAction(data) {
 		console.log(data);
@@ -92,7 +92,9 @@ $(document).ready(function() {
 		$.getJSON('./poll', function(res) {
 			if(res && res.length > 0) {
 				console.log(res);
-				determineAction(res);
+				for(var i = 0; i < res.length; i++) {
+					determineAction(res[i]);
+				}
 			}
 			poll();
 		});
