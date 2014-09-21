@@ -4,6 +4,7 @@
   "author": "@alirezatr, @jathu, @migoden, @navjotd",
   "description": "hack project for Hack The North",
   "dependencies": {
+    "q": "^1.0.1",
     "socket.io": "^1.1.0"
   }
 }

@@ -1,6 +1,5 @@
 var http = require('http'),
 	fs = require('fs'),
-	querystring = require('querystring');
 	cache = {};
 
 var server = http.createServer(function(req, res) {
@@ -11,17 +10,19 @@ var server = http.createServer(function(req, res) {
 	} 
 
 	//get all dependencies
-	if (req.url.split('/')[1] === 'src' || req.url.split('/')[1] === 'style') {
+	var sourcesFolder = req.url.split('/')[1]
+	if (sourcesFolder === 'src' || sourcesFolder === 'style') {
 		filePath = 'public' + req.url;
 	}
 
+	serveStatic(res, cache, './' + filePath);
+
 	if (req.method == "POST") {
-		console.log("there has been a post from:");
-		console.log(req.url);
 		var requestBody = "";
 
 		req.on('data', function(d) {
 			requestBody += d.toString('utf8');
+			//this makes sure the response is not an infinitely large file
 			if (requestBody.length > 1e7) {
 				res.writeHead(200, {"content-type" : "text/plain"});
 				res.end('your post data was very long');
@@ -29,12 +30,9 @@ var server = http.createServer(function(req, res) {
 		});
 
 		req.on('end', function() {
-			console.log("this is a post");
-			console.log(requestBody);
+			
 		})
 	}
-
-	serveStatic(res, cache, './' + filePath);
 
 }).listen(8080, function() {console.log("server is now listening")});
 
@@ -70,42 +68,33 @@ function serveStatic(response, cache, absPath) {
 	}
 }
 
-// *********************** THIS IS SOCKET **************************
 
-var io = require('socket.io')(server);
+// *** TESTING POST ***
 
-io.on('connection', function(socket) {
+function runTest() {
+	var opts = {
+	  host: 'localhost',
+	  port: 8080,
+	  path: '/elements',
+	  method: 'POST',
+	  headers: {'content-type':'application/json'}
+	}
 
-})
-
-
-function addElement() {
-
-}
-
-var opts = {
-  host: 'localhost',
-  port: 8080,
-  path: '/sex',
-  method: 'POST',
-  headers: {'content-type':'application/json'}
-}
-
-var req = http.request(opts, function(res) {
-	var data = "";
-	res.setEncoding('utf8');
-	res.on('data', function(d) {
-		data += d;
+	var req = http.request(opts, function(res) {
+		var data = "";
+		res.setEncoding('utf8');
+		res.on('data', function(d) {
+			data += d;
+		})
+		console.log(data)
 	})
-	console.log(data)
-})
 
-req.on('error', function(err) {
-	console.log("you fucked this up. How could you?");
-})
+	req.on('error', function(err) {
+		console.log("you fucked this up. How could you?");
+	})
 
-req.write('{"test": "navjot"}');
-req.end();
-
+	req.write('{"intent": "select", "elementID": "5"}');
+	req.end();
+}
 
 
