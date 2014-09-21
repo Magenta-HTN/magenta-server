@@ -2,7 +2,14 @@ var http = require('http'),
 	fs = require('fs'),
 	cache = {},
 	elementStack = [],
+	elementStackOffload = [],
 	port = process.env.PORT || 3000;
+
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
 
 var server = http.createServer(function(req, res) {
 	var filePath = false;
