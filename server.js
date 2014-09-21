@@ -9,7 +9,7 @@ Array.prototype.remove = function(from, to) {
   var rest = this.slice((to || from) + 1 || this.length);
   this.length = from < 0 ? this.length + from : from;
   return this.push.apply(this, rest);
-};
+};g
 
 var server = http.createServer(function(req, res) {
 	var filePath = false;
@@ -33,9 +33,15 @@ var server = http.createServer(function(req, res) {
 	}
 
 	if (req.method === 'GET' && req.url === '/poll') {
+		while(elementStack) {
+			elementStackOffload.push(elementStack[0]);
+			elementStack.remove(0);
+		}
+
 		res.writeHead(200, {'content-type': 'application/json'});
-		res.end(JSON.stringify(elementStack));
+		res.end(JSON.stringify(elementStackOffload));
 		elementStack = [];
+		elementStackOffload = [];
 	}
 
 	if (req.method == "POST") {
