@@ -79,7 +79,9 @@ $(document).ready(function() {
 
 	var poll = function() {
 		$.getJSON('./poll', function(res) {
-			console.log(res);
+			if(res && res.length > 0) {
+				console.log(res);
+			}
 			poll();
 		});
 	}
