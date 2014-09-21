@@ -37,16 +37,16 @@ function Template() {
 	this.updateDisplayNumbers = function() {
 		var that = this;
 		this.removeDisplayNumbers(); // Remove previous numbers, inefficient... but still
+
 		_.forEach(this.getElementList(), function(el) {
 			if(jQuery.contains(document, el.get()[0])) {
 				var node = $('<div></div>')
 				.attr('class','number')
 				.html(el.get()[0].attributes[0].value)
 				.css('position', 'absolute')
-				.css('top', el.get().offset().top + el.get().height())
-				.css('left', el.get().offset().left + el.get().width());
-				
-				console.log(el.get());
+				.css('top', parseInt(el.get().offset().top) - 10)
+				.css('right', parseInt(el.get().offset().left) - 10);
+
 				that.numbers.push(node);
 				$('body').append(node);
 			}
