@@ -30,7 +30,7 @@ var server = http.createServer(function(req, res) {
 			// console.log('we are polling');
 			res.writeHead(200, {'content-type': 'application/json'});
 			// console.log(elementStack);
-			res.end(JSON.stringify({msg: "hello"}));
+			res.end(JSON.stringify(elementStack));
 			elementStack = [];
 		}
 	}
