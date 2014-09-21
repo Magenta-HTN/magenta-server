@@ -59,4 +59,14 @@ $(document).ready(function() {
 		}
 	}
 
+	var poll = function() {
+		$.getJSON('./poll' + counter, function(response) {
+			counter
+
+			poll();
+		})
+	}
+
+	poll();
+
 });
