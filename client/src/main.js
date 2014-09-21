@@ -72,8 +72,10 @@ $(document).ready(function() {
 	console.log(determineAction(thirdInput));
 
 	function determineAction(data) {
-
 		data = (typeof(data) == "string") ? JSON.parse(data):data;
+
+		console.log('---------');
+		console.log(data);
 
 		if(data && data.intent.toLowerCase() == "add") {
 			return temp.get({"elementID": temp.add(data)});
@@ -86,6 +88,7 @@ $(document).ready(function() {
 		$.getJSON('./poll', function(res) {
 			if(res && res.length > 0) {
 				console.log(res);
+				determineAction(res);
 			}
 			poll();
 		});
