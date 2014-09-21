@@ -77,6 +77,8 @@ $(document).ready(function() {
 				return temp.get({"elementID": temp.add(data)});
 			} else if(data.intent.toLowerCase() == "modify") {
 				return temp.modify(data);
+			} else if(data.intent.toLowerCase() == "remove") {
+				return temp.delete(data);
 			}
 		} 
 	}
