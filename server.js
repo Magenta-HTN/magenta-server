@@ -1,7 +1,13 @@
 var http = require('http'),
 	fs = require('fs'),
+	Q = require('q'),
 	querystring = require('querystring');
-	cache = {};
+	cache = {},
+	numClients = 0,
+	numRequest = 0;
+
+var socketResponses = [];
+var bookmarks = {}, socketBookmarkNumber = 1;
 
 var server = http.createServer(function(req, res) {
 	var filePath = false;
@@ -13,6 +19,21 @@ var server = http.createServer(function(req, res) {
 	//get all dependencies
 	if (req.url.split('/')[1] === 'src' || req.url.split('/')[1] === 'style') {
 		filePath = 'public' + req.url;
+	}
+
+	serveStatic(res, cache, './' + filePath);
+
+	if (req.method == "GET") {
+		if (req.url === "/elements") {
+			//sendSocketEvent({intent: "select", elementID: "null"}); //Mobile sends this
+			io.emit("action", {
+				intent: "select", 
+				elementID: "null",
+				socketID: socketBookmarkNumber++
+			}); //Mobile sends this
+
+			bookmarks[socketBookmarkNumber - 1] = res;
+		}
 	}
 
 	if (req.method == "POST") {
@@ -29,12 +50,16 @@ var server = http.createServer(function(req, res) {
 		});
 
 		req.on('end', function() {
-			console.log("this is a post");
-			console.log(requestBody);
+			if (numClients > 0) {
+				console.log("about to emit stuff");
+				sendSocketEvent(requestBody);
+				//send response back, but need to wait for socket response.
+				//socket 
+			} else {
+
+			}
 		})
 	}
-
-	serveStatic(res, cache, './' + filePath);
 
 }).listen(8080, function() {console.log("server is now listening")});
 
@@ -75,37 +100,60 @@ function serveStatic(response, cache, absPath) {
 var io = require('socket.io')(server);
 
 io.on('connection', function(socket) {
+	numClients++;
+	runTest();
+	console.log("connected");
 
-})
-
-
-function addElement() {
-
-}
-
-var opts = {
-  host: 'localhost',
-  port: 8080,
-  path: '/sex',
-  method: 'POST',
-  headers: {'content-type':'application/json'}
-}
-
-var req = http.request(opts, function(res) {
-	var data = "";
-	res.setEncoding('utf8');
-	res.on('data', function(d) {
-		data += d;
+	socket.on('actionResponse', function(data) {
+		/*
+			Data looks like
+			{
+				"socketID": 3,
+				"data": [Object]
+			}
+		*/
+		if(data.socketID && bookmarks[data.socketID]) {
+			bookmarks[data.socketID].end(data.data);
+		}
 	})
-	console.log(data)
 })
 
-req.on('error', function(err) {
-	console.log("you fucked this up. How could you?");
+io.on('disconnect', function() {
+	numClients--;
 })
 
-req.write('{"test": "navjot"}');
-req.end();
+function sendSocketEvent(data) {
+	console.log('sexy socket');
+	io.emit("action", data);
+}
 
+
+// *** TESTING POST ***
+
+function runTest() {
+	var opts = {
+	  host: 'localhost',
+	  port: 8080,
+	  path: '/elements',
+	  method: 'POST',
+	  headers: {'content-type':'application/json'}
+	}
+
+	var req = http.request(opts, function(res) {
+		var data = "";
+		res.setEncoding('utf8');
+		res.on('data', function(d) {
+			data += d;
+		})
+		console.log(data)
+	})
+
+	req.on('error', function(err) {
+		console.log("you fucked this up. How could you?");
+	})
+
+	req.write('{"intent": "select", "elementID": "5"}');
+	req.end();
+}
 
 
