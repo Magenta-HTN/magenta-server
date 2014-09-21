@@ -65,8 +65,8 @@ $(document).ready(function() {
 	];
 
 	// Add tests
-	_.forEach(initialInputs, function(in) {
-		determineAction(in);
+	_.forEach(initialInputs, function(inp) {
+		determineAction(inp);
 	});
 
 	function determineAction(data) {
