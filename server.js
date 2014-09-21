@@ -52,8 +52,8 @@ var server = http.createServer(function(req, res) {
 			if (req.url == '/action') {
 				console.log(requestBody);
 				elementStack.push(requestBody);
-				res.writeHead(200, {"content-type": "text/plain"});
-				res.end('thanks. I like ass');
+				res.writeHead(200, {"content-type": "application/json"});
+				res.end(JSON.stringify({msg: "hello there"}));
 			}	
 		})
 	}
@@ -93,6 +93,7 @@ function runTest() {
 		var data = "";
 		res.setEncoding('utf8');
 		res.on('data', function(d) {
+			console.log(d);
 			data += d;
 		})
 		console.log(data)
