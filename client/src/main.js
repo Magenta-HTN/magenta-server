@@ -72,14 +72,9 @@ $(document).ready(function() {
 	determineAction(thirdInput);
 
 	function determineAction(data) {
-		console.log(data);
-
 		data = (typeof(data) == "string") ? JSON.parse(data):data;
-
-		console.log('\nAFTER:');
-		console.log(data);
-
 		if(data && data.intent) {
+			console.log(data);
 			if(data.intent.toLowerCase() == "add") {
 				return temp.get({"elementID": temp.add(data)});
 			} else if(data.intent.toLowerCase() == "modify") {
@@ -91,7 +86,6 @@ $(document).ready(function() {
 	var poll = function() {
 		$.getJSON('./poll', function(res) {
 			if(res && res.length > 0) {
-				console.log(res);
 				for(var i = 0; i < res.length; i++) {
 					determineAction(res[i]);
 				}
