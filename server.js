@@ -27,9 +27,12 @@ var server = http.createServer(function(req, res) {
 
 	if (req.method === 'GET') {
 		if (req.url === '/poll') {
+			// res.writeHead(200, {'content-type': 'application/json'});
+			// res.end(JSON.stringify(elementStack));
+			// elementStack = [];
+			var originalSize = elementStack.length;
 			res.writeHead(200, {'content-type': 'application/json'});
-			res.end(JSON.stringify(elementStack));
-			elementStack = [];
+			res.end(JSON.stringify(elementStack.splice(0, originalSize)));
 		}
 	}
 
