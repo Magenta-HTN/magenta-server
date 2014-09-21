@@ -4,6 +4,12 @@ var http = require('http'),
 	elementStack = [],
 	port = process.env.PORT || 3000;
 
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+
 var server = http.createServer(function(req, res) {
 	var filePath = false;
 
@@ -25,35 +31,30 @@ var server = http.createServer(function(req, res) {
 		loadStyles(res, filePath);
 	}
 
-	if (req.method === 'GET') {
-		if (req.url === '/poll') {
-			// console.log('we are polling');
+	if (req.method === "GET" && req.url === "/poll") {
+		while(elementStack) {
 			res.writeHead(200, {'content-type': 'application/json'});
-			// console.log(elementStack);
-			res.end(JSON.stringify(elementStack));
-			//elementStack = [];
+			res.end(JSON.stringify(elementStack[0]));
+			elementStack.remove(0);
 		}
 	}
 
-	if (req.method == "POST") {
+	if (req.method === "POST") {
 		var requestBody = "";
 
 		req.on('data', function(d) {
 			requestBody += d.toString('utf8');
-			//this makes sure the response is not an infinitely large file
 			if (requestBody.length > 1e7) {
 				res.writeHead(200, {"content-type" : "text/plain"});
-				res.end('your post data was very long');
+				res.end('Infinity Error.');
 			}
 		});
 
 		req.on('end', function() {
-			console.log("IM IN HERE");
 			if (req.url == '/action') {
-				console.log(requestBody);
 				elementStack.push(requestBody);
 				res.writeHead(200, {"content-type": "application/json"});
-				res.end(JSON.stringify({msg: "hello there"}));
+				res.end(JSON.stringify({msg: "Success"}));
 			}	
 		})
 	}
