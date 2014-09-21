@@ -34,6 +34,11 @@ var server = http.createServer(function(req, res) {
 			res.end(JSON.stringify({msg: "hello"}));
 			elementStack = [];
 		}
+
+		if (req.url === '/elements') {
+			res.writeHead(200, {'content-type': 'application/json'});
+			res.end(JSON.stringify({msg: "hello"}));
+		}
 	}
 
 	if (req.method == "POST") {
