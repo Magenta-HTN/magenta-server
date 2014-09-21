@@ -29,15 +29,13 @@ var server = http.createServer(function(req, res) {
 
 	if (req.method === 'GET') {
 		if (req.url === '/poll') {
-			res.writeHead(200, {'content-type': 'application/json'});
-			// console.log(elementStack);
-			res.end(JSON.stringify({msg: "hello"}));
+			res.writeHead(200, {
+				'content-type': 'application/json'
+			});
+			res.end(JSON.stringify({
+				msg: "hello"
+			}));
 			elementStack = [];
-		}
-
-		if (req.url === '/elements') {
-			res.writeHead(200, {'content-type': 'application/json'});
-			res.end(JSON.stringify({msg: "hello"}));
 		}
 	}
 
@@ -62,12 +60,16 @@ var server = http.createServer(function(req, res) {
 console.log("Server Running on Port: "+port);
 
 function loadScript(response, absPath) {
-	response.writeHead(200, {"content-type": "application/javascript"});
+	response.writeHead(200, {
+		"content-type": "application/javascript"
+	});
 	response.end(getFileData(absPath));
 }
 
 function loadStyles(response, absPath) {
-	response.writeHead(200, {"content-type": "text/css"});
+	response.writeHead(200, {
+		"content-type": "text/css"
+	});
 	response.end(getFileData(absPath));
 }
 
@@ -75,35 +77,5 @@ function getFileData(absPath) {
 	var data = fs.readFileSync(absPath);
 	return data.toString('utf8');
 }
-
-// // *** TESTING POST ***
-
-// setInterval(runTest, 2000);
-
-// function runTest() {
-// 	var opts = {
-// 	  host: 'localhost',
-// 	  port: port,
-// 	  path: '/elements',
-// 	  method: 'POST',
-// 	  headers: {'content-type':'application/json'}
-// 	}
-
-// 	var req = http.request(opts, function(res) {
-// 		var data = "";
-// 		res.setEncoding('utf8');
-// 		res.on('data', function(d) {
-// 			data += d;
-// 		})
-// 		console.log(data)
-// 	})
-
-// 	req.on('error', function(err) {
-// 		console.log("you fucked this up. How could you?");
-// 	})
-
-// 	req.write('{"intent": "select", "elementID": "5"}');
-// 	req.end();
-// }
 
 

@@ -76,14 +76,5 @@ $(document).ready(function() {
 			return temp.get({"elementID": temp.add(data)});
 		}
 	}
-
-	var poll = function() {
-		$.getJSON('./poll', function(res) {
-			console.log(res);
-			poll();
-		})
-	}
-
-	poll();
-
+	
 });
