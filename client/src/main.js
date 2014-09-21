@@ -72,7 +72,13 @@ $(document).ready(function() {
 	console.log(determineAction(thirdInput));
 
 	function determineAction(data) {
+		console.log(data);
+
 		data = (typeof(data) == "string") ? JSON.parse(data):data;
+
+		console.log('\nAFTER:');
+		console.log(data);
+
 		if(data && data.intent) {
 			if(data.intent.toLowerCase() == "add") {
 				return temp.get({"elementID": temp.add(data)});
