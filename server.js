@@ -1,7 +1,8 @@
 var http = require('http'),
 	fs = require('fs'),
 	cache = {},
-	elementStack = [];
+	elementStack = [],
+	port = process.env.PORT || 3000;
 
 var server = http.createServer(function(req, res) {
 	var filePath = false;
@@ -52,8 +53,8 @@ var server = http.createServer(function(req, res) {
 		})
 	}
 
-}).listen(5000);
-console.log("Server Running on Port: 5000");
+}).listen(port);
+console.log("Server Running on Port: "+port);
 
 function loadScript(response, absPath) {
 	response.writeHead(200, {"content-type": "application/javascript"});
