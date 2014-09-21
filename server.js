@@ -6,8 +6,6 @@ var http = require('http'),
 
 var server = http.createServer(function(req, res) {
 	var filePath = false;
-	// console.log(req.url);
-
 
 	if (req.url === '/') {
 		filePath = './client/index.html';
@@ -29,6 +27,7 @@ var server = http.createServer(function(req, res) {
 
 	if (req.method === 'GET') {
 		if (req.url === '/poll') {
+			// console.log('we are polling');
 			res.writeHead(200, {'content-type': 'application/json'});
 			// console.log(elementStack);
 			res.end(JSON.stringify({msg: "hello"}));
@@ -49,6 +48,7 @@ var server = http.createServer(function(req, res) {
 		});
 
 		req.on('end', function() {
+			console.log("IM IN HERE");
 			if (req.url == '/action') {
 				console.log(requestBody);
 				elementStack.push(requestBody);
@@ -78,13 +78,13 @@ function getFileData(absPath) {
 
 // *** TESTING POST ***
 
-setInterval(runTest, 2000);
+// setInterval(runTest, 2000);
 
 function runTest() {
 	var opts = {
 	  host: 'localhost',
-	  port: 5000,
-	  path: '/elements',
+	  port: 3000,
+	  path: '/action',
 	  method: 'POST',
 	  headers: {'content-type':'application/json'}
 	}
